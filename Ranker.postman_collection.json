@@ -1,0 +1,1267 @@
+{
+	"info": {
+		"_postman_id": "0980609b-a5af-45e2-8e21-95b8fc6b7404",
+		"name": "Ranker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get User List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/users?page=1&limit=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"users"
+							],
+							"query": [
+								{
+									"key": "min-age",
+									"value": "gte:30",
+									"disabled": true
+								},
+								{
+									"key": "max-age",
+									"value": "lte:50",
+									"disabled": true
+								},
+								{
+									"key": "first-name",
+									"value": "tina",
+									"disabled": true
+								},
+								{
+									"key": "last-name",
+									"value": "franks",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "female",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "evangelinajacobson@eyeris.com",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "If-None-Match",
+								"value": "eyJVc2VySWQiOjEwLCJBZ2UiOjMwLCJGaXJzdE5hbWUiOiJEdXJoYW0iLCJMYXN0TmFtZSI6IkZyYW5rcyIsIkdlbmRlciI6Im1hbGUiLCJFbWFpbCI6ImR1cmhhbWZyYW5rc0Brb2cuY29tIn0=",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/users/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"users",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Rating List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/xml"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/users/10/ratings?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"users",
+								"10",
+								"ratings"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "movieid",
+									"value": "100",
+									"disabled": true
+								},
+								{
+									"key": "max-score",
+									"value": "lte:3",
+									"disabled": true
+								},
+								{
+									"key": "min-score",
+									"value": "gte:1",
+									"disabled": true
+								},
+								{
+									"key": "min-timestamp",
+									"value": "gte:964982400",
+									"disabled": true
+								},
+								{
+									"key": "max-timestamp",
+									"value": "lte:964985400",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Options",
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/xml",
+								"disabled": true
+							},
+							{
+								"key": "If-None-Match",
+								"type": "text",
+								"value": "eyJVc2VySWQiOjEwLCJBZ2UiOjMwLCJGaXJzdE5hbWUiOiJEdXJoYW0iLCJMYXN0TmFtZSI6IkZyYW5rcyIsIkdlbmRlciI6Im1hbGUiLCJFbWFpbCI6ImR1cmhhbWZyYW5rc0Brb2cuY29tIn0=",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "40e12b61-50d5-4f58-8a65-449e2871417d",
+								"exec": [
+									"function getRandomAge() {",
+									"    return _.random(16, 80)",
+									"}",
+									"",
+									"function getRandomGender() {",
+									"    const genders = ['male', 'female'];",
+									"    return genders[_.random(0,1)];",
+									"}",
+									"",
+									"pm.environment.set('$randomAge', getRandomAge());",
+									"pm.environment.set('$randomGender', getRandomGender());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/xml",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/firstName\",\n    \"value\": \"{{$randomFirstName}}\"\n  },\n    {\n    \"op\": \"replace\",\n    \"path\": \"/lastName\",\n    \"value\": \"{{$randomLastName}}\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/v1/users/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"users",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "40e12b61-50d5-4f58-8a65-449e2871417d",
+								"exec": [
+									"function getRandomAge() {",
+									"    return _.random(16, 80)",
+									"}",
+									"",
+									"function getRandomGender() {",
+									"    const genders = ['male', 'female'];",
+									"    return genders[_.random(0,1)];",
+									"}",
+									"",
+									"pm.environment.set('$randomAge', getRandomAge());",
+									"pm.environment.set('$randomGender', getRandomGender());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"age\": \"{{$randomAge}}\",\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"gender\": \"{{$randomGender}}\",\r\n    \"email\": \"{{$randomEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "40e12b61-50d5-4f58-8a65-449e2871417d",
+								"exec": [
+									"function getRandomAge() {",
+									"    return _.random(16, 80)",
+									"}",
+									"",
+									"function getRandomGender() {",
+									"    const genders = ['male', 'female'];",
+									"    return genders[_.random(0,1)];",
+									"}",
+									"",
+									"pm.environment.set('$randomAge', getRandomAge());",
+									"pm.environment.set('$randomGender', getRandomGender());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/xml",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"age\": \"{{$randomAge}}\",\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"gender\": \"{{$randomGender}}\",\r\n    \"email\": \"{{$randomEmail}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/v1/users/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"users",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "40e12b61-50d5-4f58-8a65-449e2871417d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/xml",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/users/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"users",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Ratings",
+			"item": [
+				{
+					"name": "Get Rating By Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/ratings/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"ratings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rating Options",
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/xml"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/ratings/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"ratings",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rating List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/ratings?limit=100&order=-movieid",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"ratings"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "movieid",
+									"value": "100",
+									"disabled": true
+								},
+								{
+									"key": "max-score",
+									"value": "lte:3",
+									"disabled": true
+								},
+								{
+									"key": "min-score",
+									"value": "gte:1",
+									"disabled": true
+								},
+								{
+									"key": "min-timestamp",
+									"value": "gte:964982400",
+									"disabled": true
+								},
+								{
+									"key": "max-timestamp",
+									"value": "lte:964985400",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "100"
+								},
+								{
+									"key": "page",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "-movieid"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Rating",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e6d981e0-2e31-430f-a598-e3bb1c476130",
+								"exec": [
+									"function getRandomScore() {",
+									"    return _.random(1,5);",
+									"}",
+									"",
+									"function getRandomMovieId() {",
+									"    return _.random(1, 50);",
+									"}",
+									"",
+									"function getRandomUserId() {",
+									"    return _.random(1, 610);",
+									"}",
+									"",
+									"pm.environment.set('$randomScore', getRandomScore());",
+									"pm.environment.set('$randomMovieId', getRandomMovieId());",
+									"pm.environment.set('$randomUserId', getRandomUserId());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"movieId\": {{$randomMovieId}},\n\t\"userId\": {{$randomUserId}},\n\t\"score\": {{$randomScore}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/v1/ratings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Score",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "00056f0e-7123-4302-ae2a-ae1a513c37d7",
+								"exec": [
+									"function getRandomScore() {",
+									"    return _.random(1,5);",
+									"}",
+									"",
+									"pm.environment.set('$randomScore', getRandomScore());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"score\": {{$randomScore}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/v1/ratings/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"ratings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Rating",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "00056f0e-7123-4302-ae2a-ae1a513c37d7",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/ratings/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"ratings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Movies",
+			"item": [
+				{
+					"name": "Get Movie List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/movies?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"movies"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "Toy Story (1995)",
+									"disabled": true
+								},
+								{
+									"key": "genres",
+									"value": "animation,sci-fi",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "-title",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get movie by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/movies/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"movies",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Movie Options",
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Movie Rating List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/xml"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/movies/1/ratings?max-score=lte:3&min-score=gte:1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"movies",
+								"1",
+								"ratings"
+							],
+							"query": [
+								{
+									"key": "max-score",
+									"value": "lte:3"
+								},
+								{
+									"key": "min-score",
+									"value": "gte:1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6f14e761-437a-4a62-af5d-edf5f3852359",
+								"exec": [
+									"function rnd(max) {",
+									"    return Math.floor(Math.random() * max) + 1;",
+									"}",
+									"",
+									"function getRandomGenres() {",
+									"    const genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Drama', 'Horror', 'Sci-fi', 'Thriller'];",
+									"    const genreCount = rnd(7);",
+									"    ",
+									"    const picks = [];",
+									"    ",
+									"    while(picks.length !== genreCount){",
+									"        const pick = genres[rnd(7)];",
+									"        if (picks.filter(p => p === pick).length === 0) {",
+									"            picks.push(pick);",
+									"        }",
+									"    }",
+									"    ",
+									"    return JSON.stringify(picks);",
+									"}",
+									"",
+									"function getRandomMovieYear() {",
+									"    return _.random(1960,2019);",
+									"}",
+									"",
+									"pm.environment.set('$randomGenres', getRandomGenres());",
+									"pm.environment.set('$randomMovieYear', getRandomMovieYear());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"{{$randomIngverb}} {{$randomNoun}} {{$randomInt}} - ({{$randomMovieYear}})\",\n\t\"genres\": {{$randomGenres}}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/v1/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6f14e761-437a-4a62-af5d-edf5f3852359",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"value\": \"comedy\",\n    \"path\": \"/genres/-\",\n    \"op\": \"add\"\n  }\n]"
+						},
+						"url": {
+							"raw": "http://localhost:5000/v1/movies/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"movies",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd85c7fa-1ee8-4014-a83b-03ad60b8f489",
+								"exec": [
+									"function rnd(max) {",
+									"    return Math.floor(Math.random() * max) + 1;",
+									"}",
+									"",
+									"function getRandomGenres() {",
+									"    const genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Drama', 'Horror', 'Sci-fi', 'Thriller'];",
+									"    const genreCount = rnd(7);",
+									"    ",
+									"    const picks = [];",
+									"    ",
+									"    while(picks.length !== genreCount){",
+									"        const pick = genres[rnd(7)];",
+									"        if (picks.filter(p => p === pick).length === 0) {",
+									"            picks.push(pick);",
+									"        }",
+									"    }",
+									"    ",
+									"    return JSON.stringify(picks);",
+									"}",
+									"",
+									"function getRandomMovieYear() {",
+									"    return _.random(1960,2019);",
+									"}",
+									"",
+									"pm.environment.set('$randomGenres', getRandomGenres());",
+									"pm.environment.set('$randomMovieYear', getRandomMovieYear());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"{{$randomIngverb}} {{$randomNoun}} {{$randomInt}} - ({{$randomMovieYear}})\",\n\t\"genres\": {{$randomGenres}}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/v1/movies/13325432534534534",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"movies",
+								"13325432534534534"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fd85c7fa-1ee8-4014-a83b-03ad60b8f489",
+								"exec": [
+									"function rnd(max) {",
+									"    return Math.floor(Math.random() * max) + 1;",
+									"}",
+									"",
+									"function getRandomGenres() {",
+									"    const genres = ['Action', 'Adventure', 'Animation', 'Comedy', 'Drama', 'Horror', 'Sci-fi', 'Thriller'];",
+									"    const genreCount = rnd(7);",
+									"    ",
+									"    const picks = [];",
+									"    ",
+									"    while(picks.length !== genreCount){",
+									"        const pick = genres[rnd(7)];",
+									"        if (picks.filter(p => p === pick).length === 0) {",
+									"            picks.push(pick);",
+									"        }",
+									"    }",
+									"    ",
+									"    return JSON.stringify(picks);",
+									"}",
+									"",
+									"function getRandomMovieYear() {",
+									"    return _.random(1960,2019);",
+									"}",
+									"",
+									"pm.environment.set('$randomGenres', getRandomGenres());",
+									"pm.environment.set('$randomMovieYear', getRandomMovieYear());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"{{$randomIngverb}} {{$randomNoun}} {{$randomInt}} - ({{$randomMovieYear}})\",\n\t\"genres\": {{$randomGenres}}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/v1/movies/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get Links",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/v1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
