@@ -318,7 +318,7 @@ There are 5 important aspects to defining a contract:
 | --- | --- | --- | --- |
 | GET | - | /users | List of users
 | GET | - | /users/{userId} | Single user
-| POST | Single user | /users/{userId} | Single user
+| POST | Single user | /users | Single user
 | PUT | Single user | /users/{userId} | -
 | PATCH | Json Patch Document for user | /users/{userId} | -
 | DELETE | - | /users/{userId} | -
