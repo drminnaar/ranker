@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Ranker.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Ranker.Domain.Models;
 
 namespace Ranker.Application.Movies.Filters
 {
@@ -13,7 +13,7 @@ namespace Ranker.Application.Movies.Filters
         public IMovieFilterBuilder WhereTitleEquals(string? title)
         {
             if (!string.IsNullOrWhiteSpace(title))
-                Filter = Filter.And(movie => movie.Title.ToLower() == title.Trim().ToLower());
+                Filter = Filter.And(movie => movie.Title!.ToUpperInvariant() == title.Trim().ToUpperInvariant());
 
             return this;
         }
@@ -25,7 +25,12 @@ namespace Ranker.Application.Movies.Filters
                 foreach (var genre in genres)
                 {
                     //Filter = Filter.And(movie => EF.Functions.ILike(movie.Genres.ToLower(), $"%{genre.Trim().ToLower()}%"));
-                    Filter = Filter.And(movie => movie.Genres.ToLower().Contains(genre.Trim().ToLower()));
+                    Filter = Filter.And(movie => movie
+                        .Genres
+                        .ToUpperInvariant()
+                        .Contains(
+                            genre.Trim().ToUpperInvariant(),
+                            StringComparison.InvariantCultureIgnoreCase));
                 }
             }
 

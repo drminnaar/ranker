@@ -36,9 +36,9 @@ namespace Ranker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateRating([FromBody]RatingForCreate rating)
+        public async Task<IActionResult> CreateRating([FromBody] RatingForCreate rating)
         {
-            var createdRating = await _ratingService.CreateRating(rating);
+            var createdRating = await _ratingService.CreateRating(rating).ConfigureAwait(true);
 
             return CreatedAtAction(
                 actionName: nameof(GetRatingById),
@@ -62,9 +62,9 @@ namespace Ranker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteRating([FromRoute]long ratingId)
+        public async Task<IActionResult> DeleteRating([FromRoute] long ratingId)
         {
-            await _ratingService.DeleteRating(ratingId);
+            await _ratingService.DeleteRating(ratingId).ConfigureAwait(true);
             return NoContent();
         }
 
@@ -100,7 +100,7 @@ namespace Ranker.Api.Controllers
         [ResponseCache(CacheProfileName = "Default10")]
         public async Task<IActionResult> GetRatingById(long ratingId)
         {
-            var rating = await _ratingService.GetRating(ratingId);
+            var rating = await _ratingService.GetRating(ratingId).ConfigureAwait(true);
 
             if (rating == null)
                 return NotFound();
@@ -124,9 +124,9 @@ namespace Ranker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ResponseCache(CacheProfileName = "Default10")]
-        public async Task<IActionResult> GetRatingList([FromQuery]RatingQuery query)
+        public async Task<IActionResult> GetRatingList([FromQuery] RatingQuery query)
         {
-            var ratings = await _ratingService.GetRatingList(query);
+            var ratings = await _ratingService.GetRatingList(query).ConfigureAwait(true);
             Response.AddPaginationHeader(ratings, nameof(GetRatingList), query, Url);
             return Ok(new RatingList(ratings));
         }
@@ -149,9 +149,9 @@ namespace Ranker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateScore([FromRoute]long ratingId, [FromBody]ScoreUpdate score)
+        public async Task<IActionResult> UpdateScore([FromRoute] long ratingId, [FromBody] ScoreUpdate score)
         {
-            await _ratingService.UpdateRatingScore(ratingId, score);
+            await _ratingService.UpdateRatingScore(ratingId, score).ConfigureAwait(true);
             return NoContent();
         }
     }

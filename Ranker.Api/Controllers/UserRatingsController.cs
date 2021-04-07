@@ -40,11 +40,11 @@ namespace Ranker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [SwaggerOperation(Tags = new[] { "Users" })]
-        public async Task<IActionResult> GetUserRatingList([FromRoute]long userId, [FromQuery]UserRatingQuery query)
+        public async Task<IActionResult> GetUserRatingList([FromRoute] long userId, [FromQuery] UserRatingQuery query)
         {
             var ratingQuery = _mapper.Map<RatingQuery>(query);
             ratingQuery.UserId = userId;
-            var ratings = await _ratingService.GetRatingList(ratingQuery);
+            var ratings = await _ratingService.GetRatingList(ratingQuery).ConfigureAwait(true);
             Response.AddPaginationHeader(ratings, nameof(GetUserRatingList), query, Url);
             return Ok(new RatingList(ratings));
         }

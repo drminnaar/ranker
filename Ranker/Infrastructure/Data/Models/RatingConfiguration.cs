@@ -7,12 +7,12 @@ namespace Ranker.Infrastructure.Data.Models
 {
     public sealed class RatingConfiguration : IEntityTypeConfiguration<Rating>
     {
-        public void Configure(EntityTypeBuilder<Rating> entity)
+        public void Configure(EntityTypeBuilder<Rating> builder)
         {
-            if (entity is null)
-                throw new ArgumentNullException(nameof(entity));
+            if (builder is null)
+                throw new ArgumentNullException(nameof(builder));
 
-            entity.HasKey(e => e.RatingId);
+            builder.HasKey(e => e.RatingId);
         }
     }
 }

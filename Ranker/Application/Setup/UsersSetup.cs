@@ -1,4 +1,4 @@
-﻿using Fx.Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Ranker.Application.Users;
@@ -13,7 +13,7 @@ namespace Ranker.Application.Setup
         public static IServiceCollection ConfigureUsers(this IServiceCollection services)
         {
             return services
-                .AddScoped<ETagProvider>()
+                .AddScoped<IETagProvider, ETagProvider>()
                 .AddScoped<IUserFilterBuilder, UserFilterBuilder>()
                 .AddScoped<IEntityOrderBuilder<User>, UserOrderBuilder>()
                 .AddScoped<IUserService, UserService>();

@@ -27,19 +27,16 @@ namespace Microsoft.AspNetCore.Mvc
                 if (value == null)
                     continue;
 
-                if (value is string stringValue && string.IsNullOrWhiteSpace(stringValue))
+                if (property.GetCustomAttribute(typeof(FromQueryAttribute)) is not FromQueryAttribute fromQueryAttribute)
                     continue;
 
-                if (!(property.GetCustomAttribute(typeof(FromQueryAttribute)) is FromQueryAttribute fromQueryAttribute))
-                    continue;
-
-                if (value is DateTimeOffset)
+                if (value is DateTimeOffset offset)
                 {
-                    routeValues.Add(fromQueryAttribute.Name, ((DateTimeOffset)value).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+                    routeValues.Add(fromQueryAttribute.Name, offset.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
                 }
-                else if (value is DateTime)
+                else if (value is DateTime date)
                 {
-                    routeValues.Add(fromQueryAttribute.Name, ((DateTime)value).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+                    routeValues.Add(fromQueryAttribute.Name, date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
                 }
                 else
                 {

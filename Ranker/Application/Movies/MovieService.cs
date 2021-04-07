@@ -40,8 +40,8 @@ namespace Ranker.Application.Movies
             {
                 var movie = _mapper.Map<Movie>(movieForCreate);
                 _context.Movies.Add(movie);
-                await _context.SaveChangesAsync();
-                return await GetMovie(movie.MovieId);
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+                return await GetMovie(movie.MovieId).ConfigureAwait(false);
             }
         }
 
@@ -49,20 +49,22 @@ namespace Ranker.Application.Movies
         {
             var movieFromDb = await _context
                 .Movies
-                .FirstOrDefaultAsync(movie => movie.MovieId == movieId);
+                .FirstOrDefaultAsync(movie => movie.MovieId == movieId)
+                .ConfigureAwait(false);
 
             if (movieFromDb == null)
                 throw new EntityNotFoundException($"A movie having id '{movieId}' could not be found");
 
             _context.Movies.Remove(movieFromDb);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task<MovieDetail> GetMovie(long movieId)
         {
             var movieFromDb = await _context
                 .Movies
-                .FirstOrDefaultAsync(movie => movie.MovieId == movieId);
+                .FirstOrDefaultAsync(movie => movie.MovieId == movieId)
+                .ConfigureAwait(false);
 
             return _mapper.Map<MovieDetail>(movieFromDb);
         }
@@ -73,7 +75,8 @@ namespace Ranker.Application.Movies
                 .Movies
                 .TagWithQueryName(nameof(GetMovieForPatch))
                 .AsNoTracking()
-                .FirstOrDefaultAsync(movie => movie.MovieId == movieId);
+                .FirstOrDefaultAsync(movie => movie.MovieId == movieId)
+                .ConfigureAwait(false);
 
             return movieFromDb == null ? null : _mapper.Map<MovieForPatch>(movieFromDb);
         }
@@ -96,7 +99,8 @@ namespace Ranker.Application.Movies
                     .Movies
                     .Where(filter)
                     .OrderBy(query.Order, _order)
-                    .ToPagedCollectionAsync(query.Page, query.Limit);
+                    .ToPagedCollectionAsync(query.Page, query.Limit)
+                    .ConfigureAwait(false);
 
                 var movies = _mapper.Map<IReadOnlyList<MovieDetail>>(moviesFromDb);
 
@@ -119,7 +123,8 @@ namespace Ranker.Application.Movies
             {
                 var movieFromDb = await _context
                     .Movies
-                    .FirstOrDefaultAsync(movie => movie.MovieId == movieId);
+                    .FirstOrDefaultAsync(movie => movie.MovieId == movieId)
+                    .ConfigureAwait(false);
 
                 if (movieFromDb == null)
                     throw new EntityNotFoundException($"A movie having id '{movieId}' could not be found");
@@ -127,7 +132,7 @@ namespace Ranker.Application.Movies
                 movieFromDb.Title = movieForPatch.Title;
                 movieFromDb.Genres = Genre.NormalizeGenres(movieForPatch.Genres);
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
             }
         }
 
@@ -142,7 +147,8 @@ namespace Ranker.Application.Movies
             {
                 var movieFromDb = await _context
                     .Movies
-                    .FirstOrDefaultAsync(movie => movie.MovieId == movieId);
+                    .FirstOrDefaultAsync(movie => movie.MovieId == movieId)
+                    .ConfigureAwait(false);
 
                 if (movieFromDb == null)
                     throw new EntityNotFoundException($"A movie having id '{movieId}' could not be found");
@@ -150,7 +156,7 @@ namespace Ranker.Application.Movies
                 movieFromDb.Title = movieForUpdate.Title;
                 movieFromDb.Genres = Genre.NormalizeGenres(movieForUpdate.Genres);
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
             }
         }
     }

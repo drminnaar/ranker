@@ -84,9 +84,9 @@ namespace Microsoft.AspNetCore.Mvc
             if (queryParams is null)
                 throw new ArgumentNullException(nameof(queryParams));
 
-            if (!(typeof(T)
+            if (typeof(T)
                 .GetProperty(nameof(PagedQueryParams.Page), BindingFlags.Public | BindingFlags.Instance)
-                ?.GetCustomAttribute(typeof(FromQueryAttribute)) is FromQueryAttribute pageNumberParam))
+                ?.GetCustomAttribute(typeof(FromQueryAttribute)) is not FromQueryAttribute pageNumberParam)
                 throw new InvalidOperationException($"Expected the property '{nameof(PagedQueryParams.Page)}' to have an attribute of type '{nameof(FromQueryAttribute)}'.");
 
             var routeValues = queryParams.ToRouteValuesDictionary();

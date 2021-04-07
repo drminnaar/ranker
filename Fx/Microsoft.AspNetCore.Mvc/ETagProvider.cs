@@ -2,9 +2,14 @@
 using System.Text;
 using System.Text.Json;
 
-namespace Fx.Microsoft.AspNetCore.Mvc
+namespace Microsoft.AspNetCore.Mvc
 {
-    public sealed class ETagProvider
+    public interface IETagProvider
+    {
+        string GetETag<T>(T type);
+    }
+
+    public sealed class ETagProvider : IETagProvider
     {
         public string GetETag<T>(T type)
         {

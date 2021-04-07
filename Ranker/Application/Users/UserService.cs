@@ -40,8 +40,8 @@ namespace Ranker.Application.Users
             {
                 var userForCreate = _mapper.Map<User>(user);
                 _context.Users.Add(userForCreate);
-                await _context.SaveChangesAsync();
-                return await GetUser(userForCreate.UserId);
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+                return await GetUser(userForCreate.UserId).ConfigureAwait(false);
             }
         }
 
@@ -49,13 +49,14 @@ namespace Ranker.Application.Users
         {
             var userFromDb = await _context
                     .Users
-                    .FirstOrDefaultAsync(user => user.UserId == userId);
+                    .FirstOrDefaultAsync(user => user.UserId == userId)
+                    .ConfigureAwait(false);
 
             if (userFromDb == null)
                 throw new EntityNotFoundException($"A user having id '{userId}' could not be found");
 
             _context.Users.Remove(userFromDb);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task<UserDetail> GetUser(long userId)
@@ -63,7 +64,8 @@ namespace Ranker.Application.Users
             var userFromDb = await _context
                 .Users
                 .Where(user => user.UserId == userId)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
 
             return _mapper.Map<UserDetail>(userFromDb);
         }
@@ -74,7 +76,8 @@ namespace Ranker.Application.Users
                 .Users
                 .TagWithQueryName(nameof(GetUserForPatch))
                 .AsNoTracking()
-                .FirstOrDefaultAsync(user => user.UserId == userId);
+                .FirstOrDefaultAsync(user => user.UserId == userId)
+                .ConfigureAwait(false);
 
             return userFromDb == null ? null : _mapper.Map<UserForPatch>(userFromDb);
         }
@@ -100,7 +103,8 @@ namespace Ranker.Application.Users
                     .Users
                     .Where(filter)
                     .OrderBy(query.Order, _order)
-                    .ToPagedCollectionAsync(query.Page, query.Limit);
+                    .ToPagedCollectionAsync(query.Page, query.Limit)
+                    .ConfigureAwait(false);
 
                 var users = _mapper.Map<IReadOnlyList<UserDetail>>(usersFromDb);
 
@@ -123,7 +127,8 @@ namespace Ranker.Application.Users
             {
                 var userFromDb = await _context
                     .Users
-                    .FirstOrDefaultAsync(user => user.UserId == userId);
+                    .FirstOrDefaultAsync(user => user.UserId == userId)
+                    .ConfigureAwait(false);
 
                 if (userFromDb == null)
                     throw new EntityNotFoundException($"A user having id '{userId}' could not be found");
@@ -134,7 +139,7 @@ namespace Ranker.Application.Users
                 userFromDb.Gender = userForPatch.Gender;
                 userFromDb.LastName = userForPatch.LastName;
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
             }
         }
 
@@ -149,7 +154,8 @@ namespace Ranker.Application.Users
             {
                 var userFromDb = await _context
                     .Users
-                    .FirstOrDefaultAsync(user => user.UserId == userId);
+                    .FirstOrDefaultAsync(user => user.UserId == userId)
+                    .ConfigureAwait(false);
 
                 if (userFromDb == null)
                     throw new EntityNotFoundException($"A user having id '{userId}' could not be found");
@@ -160,7 +166,7 @@ namespace Ranker.Application.Users
                 userFromDb.Gender = userForUpdate.Gender;
                 userFromDb.LastName = userForUpdate.LastName;
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
             }
         }
     }

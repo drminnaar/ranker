@@ -1,18 +1,18 @@
 ﻿using System;
-using Ranker.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Ranker.Domain.Models;
 
 namespace Ranker.Infrastructure.Data.Models
 {
     public sealed class MovieConfiguration : IEntityTypeConfiguration<Movie>
     {
-        public void Configure(EntityTypeBuilder<Movie> entity)
+        public void Configure(EntityTypeBuilder<Movie> builder)
         {
-            if (entity is null)
-                throw new ArgumentNullException(nameof(entity));
+            if (builder is null)
+                throw new ArgumentNullException(nameof(builder));
 
-            entity.HasKey(e => e.MovieId);
+            builder.HasKey(e => e.MovieId);
         }
     }
 }

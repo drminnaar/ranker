@@ -29,7 +29,7 @@ namespace MediatR
             if (next is null)
                 throw new ArgumentNullException(nameof(next));
 
-            var context = new ValidationContext(request);
+            var context = new ValidationContext<TRequest>(request);
 
             var validationFailures = _validators
                 .Select(validation => validation.Validate(context))

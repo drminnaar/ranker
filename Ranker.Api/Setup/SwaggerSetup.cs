@@ -17,7 +17,7 @@ namespace Ranker.Api.Setup
                     "v1",
                     new OpenApiInfo
                     {
-                        Title = "Critic Ally Api - V1",
+                        Title = "Ranker Api - V1",
                         Version = "v1",
                         Description = "An API that facilitates movie ratings",
                         TermsOfService = new Uri("http://example.com/terms"),
@@ -45,7 +45,7 @@ namespace Ranker.Api.Setup
             app.UseSwagger();
             app.UseSwaggerUI(setup =>
             {
-                setup.SwaggerEndpoint("/swagger/v1/swagger.json", "Critic Ally Api V1");
+                setup.SwaggerEndpoint("/swagger/v1/swagger.json", "Ranker Api V1");
                 setup.RoutePrefix = string.Empty;
                 setup.DefaultModelExpandDepth(2);
                 setup.DefaultModelRendering(Swashbuckle.AspNetCore.SwaggerUI.ModelRendering.Example);

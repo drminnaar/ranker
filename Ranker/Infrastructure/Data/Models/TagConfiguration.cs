@@ -7,12 +7,12 @@ namespace Ranker.Infrastructure.Data.Models
 {
     public sealed class TagConfiguration : IEntityTypeConfiguration<MovieTag>
     {
-        public void Configure(EntityTypeBuilder<MovieTag> entity)
+        public void Configure(EntityTypeBuilder<MovieTag> builder)
         {
-            if (entity is null)
-                throw new ArgumentNullException(nameof(entity));
+            if (builder is null)
+                throw new ArgumentNullException(nameof(builder));
 
-            entity.HasKey(e => e.TagId);
+            builder.HasKey(e => e.TagId);
         }
     }
 }

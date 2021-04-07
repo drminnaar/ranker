@@ -20,7 +20,7 @@ namespace Ranker.Infrastructure.Data.Setup
                     options.EnableSensitiveDataLogging(isDevelopment);
                 })
                 .AddScoped<Seeder>()
-                .AddScoped<IRatingsDbContext>(provider => provider.GetService<RatingsDbContext>());
+                .AddScoped<IRatingsDbContext>(provider => provider.GetRequiredService<RatingsDbContext>());
         }
     }
 }

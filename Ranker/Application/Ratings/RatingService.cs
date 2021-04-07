@@ -41,8 +41,8 @@ namespace Ranker.Application.Ratings
                 var ratingForCreate = _mapper.Map<Rating>(rating);
                 ratingForCreate.Timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds();
                 _context.Ratings.Add(ratingForCreate);
-                await _context.SaveChangesAsync();
-                return await GetRating(ratingForCreate.RatingId)
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+                return await GetRating(ratingForCreate.RatingId).ConfigureAwait(false)
                     ?? throw new InvalidOperationException("Expected a rating from create");
             }
         }
@@ -54,13 +54,14 @@ namespace Ranker.Application.Ratings
                 .Where(rating => rating.RatingId == ratingId)
                 .Include(rating => rating.User)
                 .Include(rating => rating.Movie)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
 
             if (ratingFromDb == null)
                 throw new EntityNotFoundException($"A rating having id '{ratingId}' could not be found");
 
             _context.Ratings.Remove(ratingFromDb);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task<RatingDetail?> GetRating(long ratingId)
@@ -72,7 +73,8 @@ namespace Ranker.Application.Ratings
                 .Where(rating => rating.RatingId == ratingId)
                 .Include(rating => rating.User)
                 .Include(rating => rating.Movie)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
 
             return rating == null ? null : _mapper.Map<RatingDetail>(rating);
         }
@@ -86,7 +88,8 @@ namespace Ranker.Application.Ratings
                 .Where(rating => rating.MovieId == movieId && rating.UserId == userId)
                 .Include(rating => rating.User)
                 .Include(rating => rating.Movie)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
 
             return rating == null ? null : _mapper.Map<RatingDetail>(rating);
         }
@@ -115,7 +118,8 @@ namespace Ranker.Application.Ratings
                     .Include(rating => rating.User)
                     .Include(rating => rating.Movie)
                     .OrderBy(query.Order, _order)
-                    .ToPagedCollectionAsync(query.Page, query.Limit);
+                    .ToPagedCollectionAsync(query.Page, query.Limit)
+                    .ConfigureAwait(false);
 
                 var ratings = _mapper.Map<IReadOnlyList<RatingDetail>>(ratingsFromDb);
 
@@ -141,13 +145,14 @@ namespace Ranker.Application.Ratings
                     .Where(rating => rating.RatingId == ratingId)
                     .Include(rating => rating.User)
                     .Include(rating => rating.Movie)
-                    .FirstOrDefaultAsync();
+                    .FirstOrDefaultAsync()
+                    .ConfigureAwait(false);
 
                 if (ratingFromDb == null)
                     throw new EntityNotFoundException($"A rating having id '{ratingId}' could not be found");
 
                 ratingFromDb.Score = score.Score;
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
             }
         }
     }

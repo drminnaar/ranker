@@ -7,12 +7,12 @@ namespace Ranker.Infrastructure.Data.Models
 {
     public sealed class UserConfiguration : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<User> entity)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
-            if (entity is null)
-                throw new ArgumentNullException(nameof(entity));
+            if (builder is null)
+                throw new ArgumentNullException(nameof(builder));
 
-            entity.HasKey(e => e.UserId);
+            builder.HasKey(e => e.UserId);
         }
     }
 }

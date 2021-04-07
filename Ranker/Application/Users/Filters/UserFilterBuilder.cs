@@ -22,7 +22,7 @@ namespace Ranker.Application.Users.Filters
         public IUserFilterBuilder WhereEmailEquals(string? email)
         {
             if (!string.IsNullOrWhiteSpace(email))
-                Filter = Filter.And(user => user.Email.ToLower() == email.Trim().ToLower());
+                Filter = Filter.And(user => user.Email.ToUpperInvariant() == email.Trim().ToUpperInvariant());
 
             return this;
         }
@@ -30,7 +30,7 @@ namespace Ranker.Application.Users.Filters
         public IUserFilterBuilder WhereGenderEquals(string? gender)
         {
             if (!string.IsNullOrWhiteSpace(gender))
-                Filter = Filter.And(user => user.Gender.ToLower() == gender.Trim().ToLower());
+                Filter = Filter.And(user => user.Gender.ToUpperInvariant() == gender.Trim().ToUpperInvariant());
 
             return this;
         }
@@ -38,7 +38,7 @@ namespace Ranker.Application.Users.Filters
         public IUserFilterBuilder WhereFirstNameEquals(string? firstName)
         {
             if (!string.IsNullOrWhiteSpace(firstName))
-                Filter = Filter.And(user => user.FirstName.ToLower() == firstName.Trim().ToLower());
+                Filter = Filter.And(user => user.FirstName.ToUpperInvariant() == firstName.Trim().ToUpperInvariant());
 
             return this;
         }
@@ -46,7 +46,7 @@ namespace Ranker.Application.Users.Filters
         public IUserFilterBuilder WhereLastNameEquals(string? lastName)
         {
             if (!string.IsNullOrWhiteSpace(lastName))
-                Filter = Filter.And(user => user.LastName.ToLower() == lastName.Trim().ToLower());
+                Filter = Filter.And(user => user.LastName.ToUpperInvariant() == lastName.Trim().ToUpperInvariant());
 
             return this;
         }

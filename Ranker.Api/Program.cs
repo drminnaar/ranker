@@ -28,35 +28,32 @@ namespace Ranker.Api
 
         private static void SeedDb(IHost host)
         {
-            var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
+            var scopeFactory = host.Services.GetRequiredService<IServiceScopeFactory>();
 
-            using (var scope = scopeFactory.CreateScope())
-            {
-                // TODO: Uncomment the following code to limit
-                //var environment = scope.ServiceProvider.GetService<IHostEnvironment>();
-                // database seeding to development
-                // if (!environment.IsDevelopment())
-                //    return;
+            using var scope = scopeFactory.CreateScope();
+            // TODO: Uncomment the following code to limit database seeding to development
+            // var environment = scope.ServiceProvider.GetService<IHostEnvironment>();
+            // if (!environment.IsDevelopment())
+            //    return;
 
-                var executingPath = Path
-                    .GetDirectoryName(Assembly.GetExecutingAssembly().Location)
-                    ?? throw new InvalidOperationException("The current Api execution path may not be null");
+            var executingPath = Path
+                .GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+                ?? throw new InvalidOperationException("The current Api execution path may not be null");
 
-                var moviesFilePath = Path.Combine(executingPath, "SeedData/movies.json");
-                var ratingsFilePath = Path.Combine(executingPath, "SeedData/ratings.json");
-                var tagsFilePath = Path.Combine(executingPath, "SeedData/tags.json");
-                var usersFilePath = Path.Combine(executingPath, "SeedData/users.json");
+            var moviesFilePath = Path.Combine(executingPath, "SeedData/movies.json");
+            var ratingsFilePath = Path.Combine(executingPath, "SeedData/ratings.json");
+            var tagsFilePath = Path.Combine(executingPath, "SeedData/tags.json");
+            var usersFilePath = Path.Combine(executingPath, "SeedData/users.json");
 
-                var seeder = scope
-                   .ServiceProvider
-                   .GetService<Seeder>()
-                   .IncludeMovies(moviesFilePath)
-                   .IncludeUsers(usersFilePath)
-                   .IncludeTags(tagsFilePath)
-                   .IncludeRatings(ratingsFilePath);
+            var seeder = scope
+               .ServiceProvider
+               .GetRequiredService<Seeder>()
+               .IncludeMovies(moviesFilePath)
+               .IncludeUsers(usersFilePath)
+               .IncludeTags(tagsFilePath)
+               .IncludeRatings(ratingsFilePath);
 
-                seeder.Seed();
-            }
+            seeder.Seed();
         }
     }
 }

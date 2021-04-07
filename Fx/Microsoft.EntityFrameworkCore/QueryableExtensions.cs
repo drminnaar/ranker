@@ -23,12 +23,13 @@ namespace Microsoft.EntityFrameworkCore
 
             async Task<IPagedCollection<T>> ToPagedCollectionAsync()
             {
-                var itemCount = await source.CountAsync();
+                var itemCount = await source.CountAsync().ConfigureAwait(false);
 
                 var items = await source
                     .Skip(pageSize * (pageNumber - 1))
                     .Take(pageSize)
-                    .ToListAsync();
+                    .ToListAsync()
+                    .ConfigureAwait(false);
 
                 return new PagedCollection<T>(items, itemCount, pageNumber, pageSize);
             }

@@ -37,9 +37,9 @@ namespace Ranker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateMovie([FromBody]MovieForCreate movie)
+        public async Task<IActionResult> CreateMovie([FromBody] MovieForCreate movie)
         {
-            var createdMovie = await _movieService.CreateMovie(movie);
+            var createdMovie = await _movieService.CreateMovie(movie).ConfigureAwait(true);
 
             return CreatedAtAction(
                 actionName: nameof(GetMovieById),
@@ -63,9 +63,9 @@ namespace Ranker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteMovie([FromRoute]long movieId)
+        public async Task<IActionResult> DeleteMovie([FromRoute] long movieId)
         {
-            await _movieService.DeleteMovie(movieId);
+            await _movieService.DeleteMovie(movieId).ConfigureAwait(true);
             return NoContent();
         }
 
@@ -98,9 +98,9 @@ namespace Ranker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ResponseCache(CacheProfileName = "Default10")]
-        public async Task<IActionResult> GetMovieById([FromRoute]long movieId)
+        public async Task<IActionResult> GetMovieById([FromRoute] long movieId)
         {
-            var movie = await _movieService.GetMovie(movieId);
+            var movie = await _movieService.GetMovie(movieId).ConfigureAwait(true);
 
             if (movie == null)
                 return NotFound();
@@ -125,9 +125,9 @@ namespace Ranker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ResponseCache(CacheProfileName = "Default10")]
-        public async Task<IActionResult> GetMovieList([FromQuery]MovieQuery query)
+        public async Task<IActionResult> GetMovieList([FromQuery] MovieQuery query)
         {
-            var movies = await _movieService.GetMovies(query);
+            var movies = await _movieService.GetMovies(query).ConfigureAwait(true);
             Response.AddPaginationHeader(movies, nameof(GetMovieList), query, Url);
             return Ok(new MovieList(movies));
         }
@@ -150,9 +150,9 @@ namespace Ranker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> PatchMovie([FromRoute]long movieId, [FromBody]JsonPatchDocument<MovieForPatch> patch)
+        public async Task<IActionResult> PatchMovie([FromRoute] long movieId, [FromBody] JsonPatchDocument<MovieForPatch> patch)
         {
-            var movieForPatch = await _movieService.GetMovieForPatch(movieId);
+            var movieForPatch = await _movieService.GetMovieForPatch(movieId).ConfigureAwait(true);
 
             if (movieForPatch == null)
                 return NotFound();
@@ -162,7 +162,7 @@ namespace Ranker.Api.Controllers
             if (!ModelState.IsValid)
                 return ValidationProblem(ModelState);
 
-            await _movieService.PatchMovie(movieId, movieForPatch);
+            await _movieService.PatchMovie(movieId, movieForPatch).ConfigureAwait(true);
             return NoContent();
         }
 
@@ -184,9 +184,9 @@ namespace Ranker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateMovie([FromRoute]long movieId, [FromBody]MovieForUpdate movie)
+        public async Task<IActionResult> UpdateMovie([FromRoute] long movieId, [FromBody] MovieForUpdate movie)
         {
-            await _movieService.UpdateMovie(movieId, movie);
+            await _movieService.UpdateMovie(movieId, movie).ConfigureAwait(true);
             return NoContent();
         }
     }

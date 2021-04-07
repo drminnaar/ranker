@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Fx.Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -20,10 +18,10 @@ namespace Ranker.Api.Controllers
     public sealed class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly ETagProvider _etag;
+        private readonly IETagProvider _etag;
         private readonly UserResourceFactory _resourceFactory;
 
-        public UsersController(IUserService userService, ETagProvider etag, UserResourceFactory resourceFactory)
+        public UsersController(IUserService userService, IETagProvider etag, UserResourceFactory resourceFactory)
         {
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
             _etag = etag ?? throw new ArgumentNullException(nameof(etag));
@@ -46,9 +44,9 @@ namespace Ranker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateUser([FromBody]UserForCreate user)
+        public async Task<IActionResult> CreateUser([FromBody] UserForCreate user)
         {
-            var createdUser = await _userService.CreateUser(user);
+            var createdUser = await _userService.CreateUser(user).ConfigureAwait(true);
 
             return CreatedAtAction(
                 actionName: nameof(GetUserById),
@@ -72,9 +70,9 @@ namespace Ranker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteUser([FromRoute]long userId)
+        public async Task<IActionResult> DeleteUser([FromRoute] long userId)
         {
-            await _userService.DeleteUser(userId);
+            await _userService.DeleteUser(userId).ConfigureAwait(true);
             return NoContent();
         }
 
@@ -91,42 +89,42 @@ namespace Ranker.Api.Controllers
             return Ok();
         }
 
-/// <summary>
-/// Get a single user by user id
-/// </summary>
-/// <response code="200">The user was found</response>
-/// <response code="404">The user was not found</response>
-/// <response code="406">When a request is specified in an unsupported content type using the Accept header</response>
-/// <response code="415">When a response is specified in an unsupported content type</response>
-/// <response code="422">If query params structure is valid, but the values fail validation</response>
-/// <response code="500">A server fault occurred</response>
-[HttpGet("{userId:long}", Name = nameof(GetUserById))]
-[ProducesResponseType(StatusCodes.Status200OK)]
-[ProducesResponseType(StatusCodes.Status404NotFound)]
-[ProducesResponseType(StatusCodes.Status406NotAcceptable)]
-[ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
-[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-public async Task<ActionResult<UserResource>> GetUserById([FromRoute]long userId)
-{
-    var user = await _userService.GetUser(userId);
+        /// <summary>
+        /// Get a single user by user id
+        /// </summary>
+        /// <response code="200">The user was found</response>
+        /// <response code="404">The user was not found</response>
+        /// <response code="406">When a request is specified in an unsupported content type using the Accept header</response>
+        /// <response code="415">When a response is specified in an unsupported content type</response>
+        /// <response code="422">If query params structure is valid, but the values fail validation</response>
+        /// <response code="500">A server fault occurred</response>
+        [HttpGet("{userId:long}", Name = nameof(GetUserById))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
+        [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<UserResource>> GetUserById([FromRoute] long userId)
+        {
+            var user = await _userService.GetUser(userId).ConfigureAwait(true);
 
-    if (user == null)
-        return NotFound();
+            if (user == null)
+                return NotFound();
 
-    var responseETag = _etag.GetETag(user);
-    if (Request.HasETagHeader() && responseETag == Request.GetETagHeader())
-    {
-        Response.Headers[HeaderNames.ContentLength] = "0";
-        Response.ContentType = null;
-        return StatusCode((int)HttpStatusCode.NotModified);
-    }
-    Response.AddETagHeader(responseETag);
+            var responseETag = _etag.GetETag(user);
+            if (Request.HasETagHeader() && responseETag == Request.GetETagHeader())
+            {
+                Response.Headers[HeaderNames.ContentLength] = "0";
+                Response.ContentType = string.Empty;
+                return StatusCode((int)HttpStatusCode.NotModified);
+            }
+            Response.AddETagHeader(responseETag);
 
-    // To return only a user excluding links, use the following return
-    //return Ok(user);
+            // To return only a user excluding links, use the following return
+            //return Ok(user);
 
-    return Ok(_resourceFactory.CreateUserResource(user));
-}
+            return Ok(_resourceFactory.CreateUserResource(user));
+        }
 
         /// <summary>
         /// Get a paginated list of users. The pagination metadata is contained within 'x-pagination' header of response.
@@ -145,9 +143,9 @@ public async Task<ActionResult<UserResource>> GetUserById([FromRoute]long userId
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ResponseCache(CacheProfileName = "Default10")]
-        public async Task<IActionResult> GetUserList([FromQuery]UserQuery query)
+        public async Task<IActionResult> GetUserList([FromQuery] UserQuery query)
         {
-            var users = await _userService.GetUserList(query);
+            var users = await _userService.GetUserList(query).ConfigureAwait(true);
             Response.AddPaginationHeader(users, nameof(GetUserList), query, Url);
 
             // To return only a user list excluding links, use the following return
@@ -174,9 +172,9 @@ public async Task<ActionResult<UserResource>> GetUserById([FromRoute]long userId
         [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> PatchUser([FromRoute]long userId, [FromBody]JsonPatchDocument<UserForPatch> patch)
+        public async Task<IActionResult> PatchUser([FromRoute] long userId, [FromBody] JsonPatchDocument<UserForPatch> patch)
         {
-            var userForPatch = await _userService.GetUserForPatch(userId);
+            var userForPatch = await _userService.GetUserForPatch(userId).ConfigureAwait(true);
 
             if (userForPatch == null)
                 return NotFound();
@@ -186,7 +184,7 @@ public async Task<ActionResult<UserResource>> GetUserById([FromRoute]long userId
             if (!ModelState.IsValid)
                 return ValidationProblem(ModelState);
 
-            await _userService.PatchUser(userId, userForPatch);
+            await _userService.PatchUser(userId, userForPatch).ConfigureAwait(true);
             return NoContent();
         }
 
@@ -208,9 +206,9 @@ public async Task<ActionResult<UserResource>> GetUserById([FromRoute]long userId
         [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateUser([FromRoute]long userId, [FromBody]UserForUpdate user)
+        public async Task<IActionResult> UpdateUser([FromRoute] long userId, [FromBody] UserForUpdate user)
         {
-            await _userService.UpdateUser(userId, user);
+            await _userService.UpdateUser(userId, user).ConfigureAwait(true);
             return NoContent();
         }
     }

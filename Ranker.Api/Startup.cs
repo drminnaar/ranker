@@ -12,12 +12,10 @@ namespace Ranker.Api
 {
     public class Startup
     {
-        private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _environment;
 
-        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
+        public Startup(IWebHostEnvironment environment)
         {
-            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _environment = environment ?? throw new ArgumentNullException(nameof(environment));
         }
 
