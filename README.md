@@ -9,7 +9,7 @@ This is a guide with the goal of laying down foundational knowledge that is requ
 - REST Constraints
 - Richardson Maturity Model
 - REST in Practice (Some practical guidelines)
-- Example project (Written in C# using .Net Core 3.1) called _[Ranker]_
+- Example project (Written in C# using .NET 5) called _[Ranker]_
 
 The main points that I would like to summarize with regards to REST are listed as follows:
 
@@ -25,7 +25,7 @@ This sections covers REST essentials. The goal of this section is to make the re
 
 ### Introduction
 
-_REST (REpresentational State Transfer)_ is an architectural style that was defined by _[Roy Thomas Fielding]_ in his PhD dissertation _"[Architectural Styles and the Design of Network-based Software Architectures]"_. 
+_REST (REpresentational State Transfer)_ is an architectural style that was defined by _[Roy Thomas Fielding]_ in his PhD dissertation _"[Architectural Styles and the Design of Network-based Software Architectures]"_.
 
 According to _Fielding_,
 
@@ -51,119 +51,120 @@ _Fielding_ describes REST as a hybrid style that is derived from several network
 The 6 architectural REST constraints are as follows:
 
 1\. Client-Server
-   
+
 A guiding principle of _[Client-Server]_ is the _[separation of concerns]_. It's all about achieving high cohesion and loose coupling in order to improve portability and flexibility. It also allows systems to evolve independently of each other. As can be seen by the diagram below, a _Client_ sends a request, and a _Server_ receives the request.
 
 ![rest-client-server](https://user-images.githubusercontent.com/33935506/72971024-ba673d80-3e2d-11ea-963b-389138d424d5.png)
 
 2\. Statelessness
 
-A _Server_ must not store any state during communications. All information required to understand a request must be contained within the _Request_. Therefore, every _Request_ should be able to execute on its own and be self-contained. Also, a _Client_ must maintain it's own state. The benefit of this approach is as follows:
-   
-   - Visibility - Everything required to understand the _Request_ is within the _Request_. This makes monitoring a request easier.
-   - Reliability - Recovering from failures is easier because the _Server_ does not need to track/rollback/commit state because all the state is essentially captured within the message. If a _Request_ fails, it can be as simple as resending the _Request_.
-   - Scalability - Because there is no need to manage state and resources between requests, and because all _Requests_ are isolated,scalability is improved and simplified.
-   - Aligned with web architecture (the internet is designed this way)
+    A _Server_ must not store any state during communications. All information required to understand a request must be contained within the _Request_. Therefore, every _Request_ should be able to execute on its own and be self-contained. Also, a _Client_ must maintain it's own state. The benefit of this approach is as follows:
+
+    - Visibility - Everything required to understand the _Request_ is within the _Request_. This makes monitoring a request easier.
+    - Reliability - Recovering from failures is easier because the _Server_ does not need to track/rollback/commit state because all the state is essentially captured within 
+      the message. If a _Request_ fails, it can be as simple as resending the _Request_.
+    - Scalability - Because there is no need to manage state and resources between requests, and because all _Requests_ are isolated,scalability is improved and simplified.
+    - Aligned with web architecture (the internet is designed this way)
 
    ![rest-stateless](https://user-images.githubusercontent.com/33935506/72973703-9bb77580-3e32-11ea-9f3d-beba73f1b324.png)
 
    A disadvantage of this approach is that it decreases network efficiency because the _Requests_ need to contain all the information required for that interaction. The more information, the larger the _Request_ size, and therefore the more bandwidth is used. This will have a negative effect on latency as well.
 
-3\. Cache   
-   
-   The primary reason for the _Cache_ constraint is to improve network efficiency. As noted above in the _Stateless_ constraint, the size of _Requests_ can decrease network efficiency due to the need for more bandwidth. Through caching, it is possible to reduce and sometimes remove the need for a _Client_ to interact with the _Server_. In other words it's possible to reduce and/or eliminate the need for _Requests_. Therefore, the _Cache_ constraint states that a _Server_ must include additional data in the response to indicate to the client whether the _Request_ is cacheable and for how long. A network _Client_ can then decide the appropriate action based on provided cache information in _Response_.
+3\. Cache
 
-   Caching can improve performance. However, it comes with a number of disadvantages that impact the reliability of the system. For example:
-   
-   - Data Integrity - Response data could be inaccurate due to stale or expired data
-   - Complexity - The implementation and use of caching mechanisms is renowned for it's complexity in the _Computer Science_ world
+    The primary reason for the _Cache_ constraint is to improve network efficiency. As noted above in the _Stateless_ constraint, the size of _Requests_ can decrease network efficiency due to the need for more bandwidth. Through caching, it is possible to reduce and sometimes remove the need for a _Client_ to interact with the _Server_. In other words it's possible to reduce and/or eliminate the need for _Requests_. Therefore, the _Cache_ constraint states that a _Server_ must include additional data in the response to indicate to the client whether the _Request_ is cacheable and for how long. A network _Client_ can then decide the appropriate action based on provided cache information in _Response_.
+
+    Caching can improve performance. However, it comes with a number of disadvantages that impact the reliability of the system. For example:
+
+    - Data Integrity - Response data could be inaccurate due to stale or expired data
+    - Complexity - The implementation and use of caching mechanisms is renowned for it's complexity in the _Computer Science_ world
 
 4\. Uniform Interface
-   
-   At the core of this constraint is the _principle of generality_ which is closely related to the _principle of anticipation_. It stems from the fact that it is impossible to build the exact required interface for all network clients of a server service. Therefore, by providing a generic interface, one is able to provide a simplified interface with higher visibility that is able to satisfy the requirements of more clients. A disadvantage of this approach is that because the interface is so general, one is not able to satisfy specific client requirements. In other words, providing a generic interface can lead to a sub-optimal interface for many clients.
 
-   There are four additional constraints that form part of the _Uniform Interface_ and are listed as follows:
+    At the core of this constraint is the _principle of generality_ which is closely related to the _principle of anticipation_. It stems from the fact that it is impossible to build the exact required interface for all network clients of a server service. Therefore, by providing a generic interface, one is able to provide a simplified interface with higher visibility that is able to satisfy the requirements of more clients. A disadvantage of this approach is that because the interface is so general, one is not able to satisfy specific client requirements. In other words, providing a generic interface can lead to a sub-optimal interface for many clients.
 
-   - Identification of resources
-     
-     A key abstraction of REST is a resource. According to _Fielding_ ([Resources and Resource Identifiers](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_2b)), a resource is any information that can be named. Furthermore, I personally like to think of a resource as a _"Noun"_.
+    There are four additional constraints that form part of the _Uniform Interface_ and are listed as follows:
 
-     > Noun - a word (other than a pronoun) used to identify any of a class of people, places, or things ( common noun ), or to name a particular one of these ( proper noun ).
+    - Identification of resources
 
-     It is also better to think of a single resource as a collection of resources. For example, if we were to provide an API to allow a _Client_ to submit or retrieve a "rating", one would typically identify the resource as follows:
+      A key abstraction of REST is a resource. According to _Fielding_ ([Resources and Resource Identifiers](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_2b)), a resource is any information that can be named. Furthermore, I personally like to think of a resource as a _"Noun"_.
 
-     ```javascript
-     GET /ratings
-     ```
+      > Noun - a word (other than a pronoun) used to identify any of a class of people, places, or things ( common noun ), or to name a particular one of these ( proper noun ).
 
-     Generally, there should only be a single way to access a resource. But this is more a guideline than a rule.
+      It is also better to think of a single resource as a collection of resources. For example, if we were to provide an API to allow a _Client_ to submit or retrieve a "rating", one would typically identify the resource as follows:
 
-   - Manipulation of resources through representations
-     
-     This constraint states that the client should hold the representation of a resource that has enough information to create, modify or delete a resource. It's important that the representation of a resource is decoupled from the way the resource is identified. A resource can be represented in multiple formats or representations such as JSON, XML, HTML, PNG etc. A client should be able to specify the desired representation of a resource for any interaction with the server. Therefore, a _Client_ can specify to receive a resource in _JSON_ format, but send the resource as input in _XML_ format.
+      ```javascript
+      GET /ratings
+      ```
 
-     For example:
+      Generally, there should only be a single way to access a resource. But this is more a guideline than a rule.
 
-     For the retrieval of an Employees resource, we use XML format
-     by specifying a "Accept: application/xml" header.
+    - Manipulation of resources through representations
+      
+      This constraint states that the client should hold the representation of a resource that has enough information to create, modify or delete a resource. It's important that the representation of a resource is decoupled from the way the resource is identified. A resource can be represented in multiple formats or representations such as JSON, XML, HTML, PNG etc. A client should be able to specify the desired representation of a resource for any interaction with the server. Therefore, a _Client_ can specify to receive a resource in _JSON_ format, but send the resource as input in _XML_ format.
 
-     ```java
-     GET /ratings
-     Accept: application/xml
+      For example:
 
-     <ratings>
-       <rating>
-         <id>7337</id>
-         <userId>98765</userId>
-         <movieId>12345</movieId>
-         <score>6</score>
-       </rating>
-     </ratings>
-     ```
-     
-     For the creation of an Employees resource, we use
-     JSON format by specifying a "Content-Type: application/json" header
+      For the retrieval of an Employees resource, we use XML format
+      by specifying a "Accept: application/xml" header.
 
-     ```javascript
-     POST /ratings
-     Content-Type: application/json
-     {
-         "userId": 98765,
-         "movieId": 12345,
-         "score": 6
-     }     
-     ```
+      ```java
+      GET /ratings
+      Accept: application/xml
+
+      <ratings>
+        <rating>
+          <id>7337</id>
+          <userId>98765</userId>
+          <movieId>12345</movieId>
+          <score>6</score>
+        </rating>
+      </ratings>
+      ```
+      
+      For the creation of an Employees resource, we use
+      JSON format by specifying a "Content-Type: application/json" header
+
+      ```javascript
+      POST /ratings
+      Content-Type: application/json
+      {
+          "userId": 98765,
+          "movieId": 12345,
+          "score": 6
+      }     
+      ```
      
      Should a specific format not be supported, it is important for the _Server_ to provide an appropriate response to indicate that a specific format is not supported. For example:
 
      - Return a __406 Not Acceptable__ status code to indicate that the client specified a request with an _Accept_ header format that the _Server_ is unable to fulfill. [See here for more information]
      - Return a __415 Unsupported Media Type__ when a response is specified in an unsupported content type. [See here for more information]
 
-   - Self descriptive messages
-     
-     Self descriptive messages enable intermediary communication by allowing intermediary components to transform the content of the message. In other words, the semantics of the message are exposed to the intermediaries. The implication of this constraint is that interactions are stateless, standard methods and media types are used to expose the semantics of message, and responses indicate cacheability.
+    - Self descriptive messages
+      
+      Self descriptive messages enable intermediary communication by allowing intermediary components to transform the content of the message. In other words, the semantics of the message are exposed to the intermediaries. The implication of this constraint is that interactions are stateless, standard methods and media types are used to expose the semantics of message, and responses indicate cacheability.
 
-   - Hypermedia as the engine of application state (HATEOAS)
-     
-     A key concept about HATEOAS is that it implies that a _Response_ sent from a _Server_ should include information that informs the _Client_ on how to interact with the _Server_.
-     
-     ![rest-hateoas](https://user-images.githubusercontent.com/33935506/73115137-2d37fc00-3f87-11ea-925c-9ca21ba1e41c.png)
-     
-     The advantages of _HATEOAS_ are as follows:
+    - Hypermedia as the engine of application state (HATEOAS)
+      
+      A key concept about HATEOAS is that it implies that a _Response_ sent from a _Server_ should include information that informs the _Client_ on how to interact with the _Server_.
+      
+      ![rest-hateoas](https://user-images.githubusercontent.com/33935506/73115137-2d37fc00-3f87-11ea-925c-9ca21ba1e41c.png)
+      
+      The advantages of _HATEOAS_ are as follows:
 
-     - Improves discoverability of resources through published set of links (provided with response)
+      - Improves discoverability of resources through published set of links (provided with response)
 
-     - Indicates to _Clients_ what actions can be taken next. In other words, without _HATEOAS_, a _Client_ only has access to the data but no idea about what actions may be taken with that data
+      - Indicates to _Clients_ what actions can be taken next. In other words, without _HATEOAS_, a _Client_ only has access to the data but no idea about what actions may be taken with that data
 
 5\. Layered System
-   
-   The key principle of this constraint is that the _Client_ cannot make any assumptions that it is communicating directly with the _Server_. This constraint relates to the _Client-Server_ constraint (discussed above) in such a way that _Client_ and _Server_ are decoupled. Therefore the _Client_ makes no assumptions about any kind of hidden dependencies and this enables us to insert components and entire sub-systems between the _Client_ and the _Server_. This allows one to add load balancers, DNS, caching servers and security (authentication and authorization) between _Client_ and _Server_ without disrupting the interaction.
 
-   Layering allows one to evolve and improve ones architecture to improve scalability and reliability ones system.
+    The key principle of this constraint is that the _Client_ cannot make any assumptions that it is communicating directly with the _Server_. This constraint relates to the _Client-Server_ constraint (discussed above) in such a way that _Client_ and _Server_ are decoupled. Therefore the _Client_ makes no assumptions about any kind of hidden dependencies and this enables us to insert components and entire sub-systems between the _Client_ and the _Server_. This allows one to add load balancers, DNS, caching servers and security (authentication and authorization) between _Client_ and _Server_ without disrupting the interaction.
+
+    Layering allows one to evolve and improve ones architecture to improve scalability and reliability ones system.
 
 6\. Code On Demand
-   
-   This is an optional constraint. The key concept about this constraint is that when a _Client_ makes a request to a resource on a _Server_, it will receive the resource as well as the code to execute against that resource. The _Client_ knows nothing about the composition of the code and only needs to know how to execute it. Javascript is an example of where this is done.
+
+    This is an optional constraint. The key concept about this constraint is that when a _Client_ makes a request to a resource on a _Server_, it will receive the resource as well as the code to execute against that resource. The _Client_ knows nothing about the composition of the code and only needs to know how to execute it. Javascript is an example of where this is done.
 
 ### Richardson Maturity Model
 
@@ -197,17 +198,18 @@ I have developed a simple Http Api to demonstrate some of the concepts that I di
 
 - [Ranker]
   
-  > A REST API guide with and example project written in C# using .Net Core 3.1 
+  > A REST API guide with and example project written in C# using .NET 5
 
 I've also started another project that I plan to use to demonstrate various technology concepts like REST API's.
 
 - [Chinook]
   
-  > A playground for demonstrating concepts such as architecture, design, dotnet core, typescript, react, database and docker 
+  > A playground for demonstrating concepts such as architecture, design, dotnet core, typescript, react, database and docker
 
 ### 2. Defining A Contract
 
 In this example, we are going to define contracts for 3 types of resources:
+
 - Users
 - Movies
 - Ratings
@@ -226,7 +228,7 @@ There are 5 important aspects to defining a contract:
 
   ```yaml
   # Incorrect naming
-  
+
   /getUsers
   /getUserById/{userId}
 
@@ -312,19 +314,20 @@ There are 5 important aspects to defining a contract:
   # Correct
   /users?order={firstName}
   ```
+
 #### 2.2 Http Methods
 
-| Http Method | Request Body | Uri | Response |
-| --- | --- | --- | --- |
-| GET | - | /users | List of users
-| GET | - | /users/{userId} | Single user
-| POST | Single user | /users | Single user
-| PUT | Single user | /users/{userId} | -
-| PATCH | Json Patch Document for user | /users/{userId} | -
-| DELETE | - | /users/{userId} | -
-| HEAD | - | /users | -
-| HEAD | - | /users/{userId} | -
-| OPTIONS | - | /users | -
+| Http Method | Request Body                 | Uri             | Response      |
+|-------------|------------------------------|-----------------|---------------|
+| GET         | -                            | /users          | List of users |
+| GET         | -                            | /users/{userId} | Single user   |
+| POST        | Single user                  | /users          | Single user   |
+| PUT         | Single user                  | /users/{userId} | -             |
+| PATCH       | Json Patch Document for user | /users/{userId} | -             |
+| DELETE      | -                            | /users/{userId} | -             |
+| HEAD        | -                            | /users          | -             |
+| HEAD        | -                            | /users/{userId} | -             |
+| OPTIONS     | -                            | /users          | -             |
 
 #### 2.3 Status Codes
 
@@ -543,7 +546,7 @@ Pagination has been implemented in two ways for this example project.
 Where practical, I've tried to provide a filter per resource property. I've implemented filtering using 3 techniques:
 
 1\. Basic
-   
+
    ```javascript
    // filter users by last name and age
 
@@ -551,7 +554,7 @@ Where practical, I've tried to provide a filter per resource property. I've impl
    ```
 
 2\. Range
-   
+
    For numeric resource (and date) properties, I've implemented range filters as follows:
 
    ```javascript
@@ -566,7 +569,7 @@ Where practical, I've tried to provide a filter per resource property. I've impl
    ```
 
 3\. Multiple (comma separated values)
-   
+
    ```javascript
    // get a list of movies for the genres animation and sci-fi
 
@@ -878,19 +881,19 @@ GET http://localhost:5000/v1/users
 
 I have developed and tested _Ranker_ on the following Operating Systems.
 
-* [Ubuntu 18.04 LTS]
+- [Ubuntu 18.04 LTS]
 
   Ubuntu is an open source software operating system that runs from the desktop, to the cloud, to all your internet connected things.
 
-* Windows 10 Professional
+- Windows 10 Professional
 
   In addition to developing _Ranker_ on Windows 10, I have also tried and tested _Ranker_ using [Windows Subsystem For Linux]. Specifically, I have used [WSL-Ubuntu]. See more about [WSL] below.
 
-  * [Windows Subsystem For Linux]
+  - [Windows Subsystem For Linux]
 
     The Windows Subsystem for Linux lets developers run a GNU/Linux environment -- including most command-line tools, utilities, and applications -- directly on Windows, unmodified, without the overhead of a virtual machine.
 
-  * [Windows Subsystem For Linux 2]
+  - [Windows Subsystem For Linux 2]
   
     NOTE: I have not tested _Ranker_ on [WSL2] yet. I mention it here because I want to be clear that I've only tested on [WSL] (not to be confused with WSL2).
 
@@ -898,17 +901,17 @@ I have developed and tested _Ranker_ on the following Operating Systems.
 
 ### Code
 
-* [Visual Studio Code]
+- [Visual Studio Code]
 
   Visual Studio Code is a source code editor developed by Microsoft for Windows, Linux and macOS. It includes support for debugging, embedded Git control, syntax highlighting, intelligent code completion, snippets, and code refactoring.
 
-* [Visual Studio Community Edition]
+- [Visual Studio Community Edition]
 
   A fully-featured, extensible, **FREE** IDE for creating modern applications for Android, iOS, Windows, as well as web applications and cloud services.
 
 ### Database
 
-* Kept things simple and only used an in-memory database
+- Kept things simple and only used an in-memory database
 
 ---
 
@@ -916,7 +919,7 @@ I have developed and tested _Ranker_ on the following Operating Systems.
 
 Before getting started, the following frameworks must be installed on your machine:
 
-* Dotnet Core 3.1
+- Dotnet Core 3.1
 
 ### Get The Code
 
@@ -964,11 +967,13 @@ I have provided a postman collection for the _Ranker_ API. Please find the Postm
 
 I use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/drminnaar/ranker/tags).
 
+- [V1.0.0 - .NET Core 3.1 Version](https://github.com/drminnaar/ranker/releases/tag/V1.0.0)
+
 ---
 
 ## 7. Authors
 
-* **Douglas Minnaar** - *Initial work* - [drminnaar](https://github.com/drminnaar)
+- **Douglas Minnaar** - *Initial work* - [drminnaar](https://github.com/drminnaar)
 
 ---
 
