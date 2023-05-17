@@ -52,32 +52,32 @@ The 6 architectural REST constraints are as follows:
 
 1\. Client-Server
 
-A guiding principle of _[Client-Server]_ is the _[separation of concerns]_. It's all about achieving high cohesion and loose coupling in order to improve portability and flexibility. It also allows systems to evolve independently of each other. As can be seen by the diagram below, a _Client_ sends a request, and a _Server_ receives the request.
+  A guiding principle of _[Client-Server]_ is the _[separation of concerns]_. It's all about achieving high cohesion and loose coupling in order to improve portability and flexibility. It also allows systems to evolve independently of each other. As can be seen by the diagram below, a _Client_ sends a request, and a _Server_ receives the request.
 
-![rest-client-server](https://user-images.githubusercontent.com/33935506/72971024-ba673d80-3e2d-11ea-963b-389138d424d5.png)
+  ![rest-client-server](https://user-images.githubusercontent.com/33935506/72971024-ba673d80-3e2d-11ea-963b-389138d424d5.png)
 
 2\. Statelessness
 
-A _Server_ must not store any state during communications. All information required to understand a request must be contained within the _Request_. Therefore, every _Request_ should be able to execute on its own and be self-contained. Also, a _Client_ must maintain it's own state. The benefit of this approach is as follows:
+  A _Server_ must not store any state during communications. All information required to understand a request must be contained within the _Request_. Therefore, every _Request_ should be able to execute on its own and be self-contained. Also, a _Client_ must maintain it's own state. The benefit of this approach is as follows:
 
-- Visibility - Everything required to understand the _Request_ is within the _Request_. This makes monitoring a request easier.
-- Reliability - Recovering from failures is easier because the _Server_ does not need to track/rollback/commit state because all the state is essentially captured within 
-  the message. If a _Request_ fails, it can be as simple as resending the _Request_.
-- Scalability - Because there is no need to manage state and resources between requests, and because all _Requests_ are isolated,scalability is improved and simplified.
-- Aligned with web architecture (the internet is designed this way)
+  - Visibility - Everything required to understand the _Request_ is within the _Request_. This makes monitoring a request easier.
+  - Reliability - Recovering from failures is easier because the _Server_ does not need to track/rollback/commit state because all the state is essentially captured within 
+    the message. If a _Request_ fails, it can be as simple as resending the _Request_.
+  - Scalability - Because there is no need to manage state and resources between requests, and because all _Requests_ are isolated,scalability is improved and simplified.
+  - Aligned with web architecture (the internet is designed this way)
 
-![rest-stateless](https://user-images.githubusercontent.com/33935506/72973703-9bb77580-3e32-11ea-9f3d-beba73f1b324.png)
+  ![rest-stateless](https://user-images.githubusercontent.com/33935506/72973703-9bb77580-3e32-11ea-9f3d-beba73f1b324.png)
 
-A disadvantage of this approach is that it decreases network efficiency because the _Requests_ need to contain all the information required for that interaction. The more information, the larger the _Request_ size, and therefore the more bandwidth is used. This will have a negative effect on latency as well.
+  A disadvantage of this approach is that it decreases network efficiency because the _Requests_ need to contain all the information required for that interaction. The more information, the larger the _Request_ size, and therefore the more bandwidth is used. This will have a negative effect on latency as well.
 
 3\. Cache
 
-The primary reason for the _Cache_ constraint is to improve network efficiency. As noted above in the _Stateless_ constraint, the size of _Requests_ can decrease network efficiency due to the need for more bandwidth. Through caching, it is possible to reduce and sometimes remove the need for a _Client_ to interact with the _Server_. In other words it's possible to reduce and/or eliminate the need for _Requests_. Therefore, the _Cache_ constraint states that a _Server_ must include additional data in the response to indicate to the client whether the _Request_ is cacheable and for how long. A network _Client_ can then decide the appropriate action based on provided cache information in _Response_.
+  The primary reason for the _Cache_ constraint is to improve network efficiency. As noted above in the _Stateless_ constraint, the size of _Requests_ can decrease network efficiency due to the need for more bandwidth. Through caching, it is possible to reduce and sometimes remove the need for a _Client_ to interact with the _Server_. In other words it's possible to reduce and/or eliminate the need for _Requests_. Therefore, the _Cache_ constraint states that a _Server_ must include additional data in the response to indicate to the client whether the _Request_ is cacheable and for how long. A network _Client_ can then decide the appropriate action based on provided cache information in _Response_.
 
-Caching can improve performance. However, it comes with a number of disadvantages that impact the reliability of the system. For example:
+  Caching can improve performance. However, it comes with a number of disadvantages that impact the reliability of the system. For example:
 
-- Data Integrity - Response data could be inaccurate due to stale or expired data
-- Complexity - The implementation and use of caching mechanisms is renowned for it's complexity in the _Computer Science_ world
+  - Data Integrity - Response data could be inaccurate due to stale or expired data
+  - Complexity - The implementation and use of caching mechanisms is renowned for it's complexity in the _Computer Science_ world
 
 4\. Uniform Interface
 
@@ -158,13 +158,13 @@ Caching can improve performance. However, it comes with a number of disadvantage
 
 5\. Layered System
 
-    The key principle of this constraint is that the _Client_ cannot make any assumptions that it is communicating directly with the _Server_. This constraint relates to the _Client-Server_ constraint (discussed above) in such a way that _Client_ and _Server_ are decoupled. Therefore the _Client_ makes no assumptions about any kind of hidden dependencies and this enables us to insert components and entire sub-systems between the _Client_ and the _Server_. This allows one to add load balancers, DNS, caching servers and security (authentication and authorization) between _Client_ and _Server_ without disrupting the interaction.
+  The key principle of this constraint is that the _Client_ cannot make any assumptions that it is communicating directly with the _Server_. This constraint relates to the _Client-Server_ constraint (discussed above) in such a way that _Client_ and _Server_ are decoupled. Therefore the _Client_ makes no assumptions about any kind of hidden dependencies and this enables us to insert components and entire sub-systems between the _Client_ and the _Server_. This allows one to add load balancers, DNS, caching servers and security (authentication and authorization) between _Client_ and _Server_ without disrupting the interaction.
 
-    Layering allows one to evolve and improve ones architecture to improve scalability and reliability ones system.
+  Layering allows one to evolve and improve ones architecture to improve scalability and reliability ones system.
 
 6\. Code On Demand
 
-    This is an optional constraint. The key concept about this constraint is that when a _Client_ makes a request to a resource on a _Server_, it will receive the resource as well as the code to execute against that resource. The _Client_ knows nothing about the composition of the code and only needs to know how to execute it. Javascript is an example of where this is done.
+  This is an optional constraint. The key concept about this constraint is that when a _Client_ makes a request to a resource on a _Server_, it will receive the resource as well as the code to execute against that resource. The _Client_ knows nothing about the composition of the code and only needs to know how to execute it. Javascript is an example of where this is done.
 
 ### Richardson Maturity Model
 
