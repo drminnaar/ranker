@@ -81,80 +81,80 @@ Caching can improve performance. However, it comes with a number of disadvantage
 
 4\. Uniform Interface
 
-    At the core of this constraint is the _principle of generality_ which is closely related to the _principle of anticipation_. It stems from the fact that it is impossible to build the exact required interface for all network clients of a server service. Therefore, by providing a generic interface, one is able to provide a simplified interface with higher visibility that is able to satisfy the requirements of more clients. A disadvantage of this approach is that because the interface is so general, one is not able to satisfy specific client requirements. In other words, providing a generic interface can lead to a sub-optimal interface for many clients.
+  At the core of this constraint is the _principle of generality_ which is closely related to the _principle of anticipation_. It stems from the fact that it is impossible to build the exact required interface for all network clients of a server service. Therefore, by providing a generic interface, one is able to provide a simplified interface with higher visibility that is able to satisfy the requirements of more clients. A disadvantage of this approach is that because the interface is so general, one is not able to satisfy specific client requirements. In other words, providing a generic interface can lead to a sub-optimal interface for many clients.
 
-    There are four additional constraints that form part of the _Uniform Interface_ and are listed as follows:
+  There are four additional constraints that form part of the _Uniform Interface_ and are listed as follows:
 
-    - Identification of resources
+  - Identification of resources
 
-      A key abstraction of REST is a resource. According to _Fielding_ ([Resources and Resource Identifiers](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_2b)), a resource is any information that can be named. Furthermore, I personally like to think of a resource as a _"Noun"_.
+    A key abstraction of REST is a resource. According to _Fielding_ ([Resources and Resource Identifiers](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_2b)), a resource is any information that can be named. Furthermore, I personally like to think of a resource as a _"Noun"_.
 
-      > Noun - a word (other than a pronoun) used to identify any of a class of people, places, or things ( common noun ), or to name a particular one of these ( proper noun ).
+    > Noun - a word (other than a pronoun) used to identify any of a class of people, places, or things ( common noun ), or to name a particular one of these ( proper noun ).
 
-      It is also better to think of a single resource as a collection of resources. For example, if we were to provide an API to allow a _Client_ to submit or retrieve a "rating", one would typically identify the resource as follows:
+    It is also better to think of a single resource as a collection of resources. For example, if we were to provide an API to allow a _Client_ to submit or retrieve a "rating", one would typically identify the resource as follows:
 
-      ```javascript
-      GET /ratings
-      ```
+    ```javascript
+    GET /ratings
+    ```
 
-      Generally, there should only be a single way to access a resource. But this is more a guideline than a rule.
+    Generally, there should only be a single way to access a resource. But this is more a guideline than a rule.
 
-    - Manipulation of resources through representations
-      
-      This constraint states that the client should hold the representation of a resource that has enough information to create, modify or delete a resource. It's important that the representation of a resource is decoupled from the way the resource is identified. A resource can be represented in multiple formats or representations such as JSON, XML, HTML, PNG etc. A client should be able to specify the desired representation of a resource for any interaction with the server. Therefore, a _Client_ can specify to receive a resource in _JSON_ format, but send the resource as input in _XML_ format.
+  - Manipulation of resources through representations
+    
+    This constraint states that the client should hold the representation of a resource that has enough information to create, modify or delete a resource. It's important that the representation of a resource is decoupled from the way the resource is identified. A resource can be represented in multiple formats or representations such as JSON, XML, HTML, PNG etc. A client should be able to specify the desired representation of a resource for any interaction with the server. Therefore, a _Client_ can specify to receive a resource in _JSON_ format, but send the resource as input in _XML_ format.
 
-      For example:
+    For example:
 
-      For the retrieval of an Employees resource, we use XML format
-      by specifying a "Accept: application/xml" header.
+    For the retrieval of an Employees resource, we use XML format
+    by specifying a "Accept: application/xml" header.
 
-      ```java
-      GET /ratings
-      Accept: application/xml
+    ```java
+    GET /ratings
+    Accept: application/xml
 
-      <ratings>
-        <rating>
-          <id>7337</id>
-          <userId>98765</userId>
-          <movieId>12345</movieId>
-          <score>6</score>
-        </rating>
-      </ratings>
-      ```
-      
-      For the creation of an Employees resource, we use
-      JSON format by specifying a "Content-Type: application/json" header
+    <ratings>
+      <rating>
+        <id>7337</id>
+        <userId>98765</userId>
+        <movieId>12345</movieId>
+        <score>6</score>
+      </rating>
+    </ratings>
+    ```
+    
+    For the creation of an Employees resource, we use
+    JSON format by specifying a "Content-Type: application/json" header
 
-      ```javascript
-      POST /ratings
-      Content-Type: application/json
-      {
-          "userId": 98765,
-          "movieId": 12345,
-          "score": 6
-      }     
-      ```
-     
-     Should a specific format not be supported, it is important for the _Server_ to provide an appropriate response to indicate that a specific format is not supported. For example:
+    ```javascript
+    POST /ratings
+    Content-Type: application/json
+    {
+        "userId": 98765,
+        "movieId": 12345,
+        "score": 6
+    }     
+    ```
+    
+    Should a specific format not be supported, it is important for the _Server_ to provide an appropriate response to indicate that a specific format is not supported. For example:
 
-     - Return a __406 Not Acceptable__ status code to indicate that the client specified a request with an _Accept_ header format that the _Server_ is unable to fulfill. [See here for more information]
-     - Return a __415 Unsupported Media Type__ when a response is specified in an unsupported content type. [See here for more information]
+    - Return a __406 Not Acceptable__ status code to indicate that the client specified a request with an _Accept_ header format that the _Server_ is unable to fulfill. [See here for more information]
+    - Return a __415 Unsupported Media Type__ when a response is specified in an unsupported content type. [See here for more information]
 
-    - Self descriptive messages
-      
-      Self descriptive messages enable intermediary communication by allowing intermediary components to transform the content of the message. In other words, the semantics of the message are exposed to the intermediaries. The implication of this constraint is that interactions are stateless, standard methods and media types are used to expose the semantics of message, and responses indicate cacheability.
+  - Self descriptive messages
+    
+    Self descriptive messages enable intermediary communication by allowing intermediary components to transform the content of the message. In other words, the semantics of the message are exposed to the intermediaries. The implication of this constraint is that interactions are stateless, standard methods and media types are used to expose the semantics of message, and responses indicate cacheability.
 
-    - Hypermedia as the engine of application state (HATEOAS)
-      
-      A key concept about HATEOAS is that it implies that a _Response_ sent from a _Server_ should include information that informs the _Client_ on how to interact with the _Server_.
-      
-      ![rest-hateoas](https://user-images.githubusercontent.com/33935506/73115137-2d37fc00-3f87-11ea-925c-9ca21ba1e41c.png)
-      
-      The advantages of _HATEOAS_ are as follows:
+  - Hypermedia as the engine of application state (HATEOAS)
+    
+    A key concept about HATEOAS is that it implies that a _Response_ sent from a _Server_ should include information that informs the _Client_ on how to interact with the _Server_.
+    
+    ![rest-hateoas](https://user-images.githubusercontent.com/33935506/73115137-2d37fc00-3f87-11ea-925c-9ca21ba1e41c.png)
+    
+    The advantages of _HATEOAS_ are as follows:
 
-      - Improves discoverability of resources through published set of links (provided with response)
+    - Improves discoverability of resources through published set of links (provided with response)
 
-      - Indicates to _Clients_ what actions can be taken next. In other words, without _HATEOAS_, a _Client_ only has access to the data but no idea about what actions may be taken with that data
+    - Indicates to _Clients_ what actions can be taken next. In other words, without _HATEOAS_, a _Client_ only has access to the data but no idea about what actions may be taken with that data
 
 5\. Layered System
 
