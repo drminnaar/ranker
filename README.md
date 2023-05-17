@@ -58,17 +58,17 @@ A guiding principle of _[Client-Server]_ is the _[separation of concerns]_. It's
 
 2\. Statelessness
 
-    A _Server_ must not store any state during communications. All information required to understand a request must be contained within the _Request_. Therefore, every _Request_ should be able to execute on its own and be self-contained. Also, a _Client_ must maintain it's own state. The benefit of this approach is as follows:
+A _Server_ must not store any state during communications. All information required to understand a request must be contained within the _Request_. Therefore, every _Request_ should be able to execute on its own and be self-contained. Also, a _Client_ must maintain it's own state. The benefit of this approach is as follows:
 
-    - Visibility - Everything required to understand the _Request_ is within the _Request_. This makes monitoring a request easier.
-    - Reliability - Recovering from failures is easier because the _Server_ does not need to track/rollback/commit state because all the state is essentially captured within 
-      the message. If a _Request_ fails, it can be as simple as resending the _Request_.
-    - Scalability - Because there is no need to manage state and resources between requests, and because all _Requests_ are isolated,scalability is improved and simplified.
-    - Aligned with web architecture (the internet is designed this way)
+- Visibility - Everything required to understand the _Request_ is within the _Request_. This makes monitoring a request easier.
+- Reliability - Recovering from failures is easier because the _Server_ does not need to track/rollback/commit state because all the state is essentially captured within 
+  the message. If a _Request_ fails, it can be as simple as resending the _Request_.
+- Scalability - Because there is no need to manage state and resources between requests, and because all _Requests_ are isolated,scalability is improved and simplified.
+- Aligned with web architecture (the internet is designed this way)
 
-   ![rest-stateless](https://user-images.githubusercontent.com/33935506/72973703-9bb77580-3e32-11ea-9f3d-beba73f1b324.png)
+![rest-stateless](https://user-images.githubusercontent.com/33935506/72973703-9bb77580-3e32-11ea-9f3d-beba73f1b324.png)
 
-   A disadvantage of this approach is that it decreases network efficiency because the _Requests_ need to contain all the information required for that interaction. The more information, the larger the _Request_ size, and therefore the more bandwidth is used. This will have a negative effect on latency as well.
+A disadvantage of this approach is that it decreases network efficiency because the _Requests_ need to contain all the information required for that interaction. The more information, the larger the _Request_ size, and therefore the more bandwidth is used. This will have a negative effect on latency as well.
 
 3\. Cache
 
