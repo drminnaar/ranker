@@ -72,12 +72,12 @@ A disadvantage of this approach is that it decreases network efficiency because 
 
 3\. Cache
 
-    The primary reason for the _Cache_ constraint is to improve network efficiency. As noted above in the _Stateless_ constraint, the size of _Requests_ can decrease network efficiency due to the need for more bandwidth. Through caching, it is possible to reduce and sometimes remove the need for a _Client_ to interact with the _Server_. In other words it's possible to reduce and/or eliminate the need for _Requests_. Therefore, the _Cache_ constraint states that a _Server_ must include additional data in the response to indicate to the client whether the _Request_ is cacheable and for how long. A network _Client_ can then decide the appropriate action based on provided cache information in _Response_.
+The primary reason for the _Cache_ constraint is to improve network efficiency. As noted above in the _Stateless_ constraint, the size of _Requests_ can decrease network efficiency due to the need for more bandwidth. Through caching, it is possible to reduce and sometimes remove the need for a _Client_ to interact with the _Server_. In other words it's possible to reduce and/or eliminate the need for _Requests_. Therefore, the _Cache_ constraint states that a _Server_ must include additional data in the response to indicate to the client whether the _Request_ is cacheable and for how long. A network _Client_ can then decide the appropriate action based on provided cache information in _Response_.
 
-    Caching can improve performance. However, it comes with a number of disadvantages that impact the reliability of the system. For example:
+Caching can improve performance. However, it comes with a number of disadvantages that impact the reliability of the system. For example:
 
-    - Data Integrity - Response data could be inaccurate due to stale or expired data
-    - Complexity - The implementation and use of caching mechanisms is renowned for it's complexity in the _Computer Science_ world
+- Data Integrity - Response data could be inaccurate due to stale or expired data
+- Complexity - The implementation and use of caching mechanisms is renowned for it's complexity in the _Computer Science_ world
 
 4\. Uniform Interface
 
