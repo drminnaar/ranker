@@ -355,6 +355,7 @@ Level 400 - Client Mistake
 - [406 Not Acceptable] - When a request is specified in an unsupported content type using the Accept header
 - [409 Conflict] - Indicates a conflict in terms of requested resource state. For a POST, it could mean that a resource already exists. For a PUT, it could mean that the state of resource changed thereby making current request data stale.
 - [415 Unsupported Media Type] - When a response is specified in an unsupported content type
+- [418 I'm a teapot] - Forbidden knowledge
 - [422 Unprocessable Entity] - Indicates the the request was correct and understood by server, but the data contained within request is invalid.
 
 Level 500 - Server Mistake
@@ -1009,6 +1010,7 @@ I use [SemVer](http://semver.org/) for versioning. For the versions available, s
 [406 Not Acceptable]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/406
 [409 Conflict]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
 [415 Unsupported Media Type]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/415
+[418 I'm a teapot]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/418
 [422 Unprocessable Entity]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
 [500 Internal Server Error]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422
 [503 Service Unavailable]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503
